@@ -1,6 +1,8 @@
 package com.example.appnhac.Service;
 
+import com.example.appnhac.Model.Playlist;
 import com.example.appnhac.Model.Quangcao;
+import com.example.appnhac.Model.Theloaitrongngay;
 
 import java.util.List;
 
@@ -16,5 +18,9 @@ public interface Dataservice {
     Call<List<Quangcao>> GetDataBanner();
 
 
+    @GET("playlistforcurrentday.php")
+    Call<List<Playlist>> GetPlaylistCurrentDay();
 
+    @GET("chudevatheloaitrongngay.php")
+    Call<Theloaitrongngay> GetCategoryMusic();
 }
