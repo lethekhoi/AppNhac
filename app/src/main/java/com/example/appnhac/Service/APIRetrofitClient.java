@@ -17,8 +17,8 @@ public class APIRetrofitClient {
     public static Retrofit getClient(String url) {
         Gson gson = new GsonBuilder().setLenient().create();
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .readTimeout(1000000000 , TimeUnit.MILLISECONDS)
-                .writeTimeout(1000000000 , TimeUnit.MILLISECONDS)
+                .readTimeout(2000000000 , TimeUnit.MILLISECONDS)
+                .writeTimeout(2000000000 , TimeUnit.MILLISECONDS)
                 .retryOnConnectionFailure(true)
                 .build();
         retrofit = new Retrofit.Builder()
