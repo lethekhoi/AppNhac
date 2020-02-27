@@ -1,6 +1,7 @@
 package com.example.appnhac.Service;
 
 import com.example.appnhac.Model.Album;
+import com.example.appnhac.Model.Baihat;
 import com.example.appnhac.Model.Playlist;
 import com.example.appnhac.Model.Quangcao;
 import com.example.appnhac.Model.Theloaitrongngay;
@@ -27,4 +28,7 @@ public interface Dataservice {
 
     @GET("albumhot.php")
     Call<List<Album>> GetAlbumHot();
+
+    @GET("baihatduocyeuthich.php")
+    Call<List<Baihat>> GetBaiHatHot();
 }

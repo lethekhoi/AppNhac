@@ -66,7 +66,7 @@ public class Fragment_Playlist extends Fragment {
 
             @Override
             public void onFailure(Call<List<Playlist>> call, Throwable t) {
-                Log.d("BBB", "false");
+                Log.d("BBB", "false 6");
             }
         });
 
