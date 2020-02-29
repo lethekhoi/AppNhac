@@ -3,6 +3,7 @@ package com.example.appnhac.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.appnhac.Adapter.DanhSachBaiHatAdapter;
 import com.example.appnhac.Model.Baihat;
 import com.example.appnhac.Model.Quangcao;
 import com.example.appnhac.R;
@@ -45,6 +47,7 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
     ImageView imgdanhsachcakhuc;
     ArrayList<Baihat> mangbaihat;
+    DanhSachBaiHatAdapter danhSachBaiHatAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +92,10 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
             public void onResponse(Call<List<Baihat>> call, Response<List<Baihat>> response) {
                 mangbaihat = (ArrayList<Baihat>) response.body();
                 Log.d("BBB", mangbaihat.get(0).getTenBaiHat());
+                danhSachBaiHatAdapter = new DanhSachBaiHatAdapter(DanhsachbaihatActivity.this, mangbaihat);
+                recyclerViewdanhsachbaihat.setLayoutManager(new LinearLayoutManager(DanhsachbaihatActivity.this));
+                recyclerViewdanhsachbaihat.setAdapter(danhSachBaiHatAdapter);
+
             }
 
             @Override
