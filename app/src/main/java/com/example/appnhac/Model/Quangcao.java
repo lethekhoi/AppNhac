@@ -3,7 +3,9 @@ package com.example.appnhac.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Quangcao {
+import java.io.Serializable;
+
+public class Quangcao implements Serializable {
 
 @SerializedName("IdQuangCao")
 @Expose
@@ -71,5 +73,7 @@ return hinhBaiHat;
 public void setHinhBaiHat(String hinhBaiHat) {
 this.hinhBaiHat = hinhBaiHat;
 }
+
+
 
 }

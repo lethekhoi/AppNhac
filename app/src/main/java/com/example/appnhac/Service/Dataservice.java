@@ -9,7 +9,10 @@ import com.example.appnhac.Model.Theloaitrongngay;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 
 public interface Dataservice {
     //gửi phương thức và nhận dữ liệu từ phía server về
@@ -31,4 +34,8 @@ public interface Dataservice {
 
     @GET("baihatduocyeuthich.php")
     Call<List<Baihat>> GetBaiHatHot();
+
+    @FormUrlEncoded
+    @POST("danhsachbaihat.php")
+    Call<List<Baihat>> Getdanhsachbaihattheoquangcao(@Field("idquangcao") String idquangcao);
 }
