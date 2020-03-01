@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.appnhac.Adapter.DanhSachBaiHatAdapter;
 import com.example.appnhac.Model.Baihat;
+import com.example.appnhac.Model.Playlist;
 import com.example.appnhac.Model.Quangcao;
 import com.example.appnhac.R;
 import com.example.appnhac.Service.APIService;
@@ -39,7 +40,7 @@ import retrofit2.Response;
 
 public class DanhsachbaihatActivity extends AppCompatActivity {
     Quangcao quangcao;
-
+    Playlist playlist;
     CoordinatorLayout coordinatorLayout;
     CollapsingToolbarLayout collapsingToolbarLayout;
     Toolbar toolbar;
@@ -57,14 +58,41 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
         DataIntent();
         AnhXa();
         Init();
-
+//bấm vào quảng cáo
         if (quangcao != null && !quangcao.getTenBaiHat().equals("")) {
-            setValueInView(quangcao.getTenBaiHat(), quangcao.getHinhBaiHat());
+            setValueInView(quangcao.getTenBaiHat(), quangcao.getHinhBaiHat(), quangcao.getHinhanh());
             GetDataQuangCao(quangcao.getIdQuangCao());
         }
+//bấm vào playlist
+
+        if (playlist != null && !playlist.getTen().equals("")) {
+            setValueInView(playlist.getTen(), playlist.getIcon(), playlist.getHinhPlaylist());
+            GetDataPlaylist(playlist.getIdPlaylist());
+        }
+
+
     }
 
-    private void setValueInView(String ten, String hinh) {
+    private void GetDataPlaylist(String idplaylist) {
+        Dataservice dataservice = APIService.getService();
+        Call<List<Baihat>> callbacks = dataservice.Getdanhsachbaihattheoplaylist(idplaylist);
+        callbacks.enqueue(new Callback<List<Baihat>>() {
+            @Override
+            public void onResponse(Call<List<Baihat>> call, Response<List<Baihat>> response) {
+                mangbaihat = (ArrayList<Baihat>) response.body();
+                danhSachBaiHatAdapter = new DanhSachBaiHatAdapter(DanhsachbaihatActivity.this, mangbaihat);
+                recyclerViewdanhsachbaihat.setLayoutManager(new LinearLayoutManager(DanhsachbaihatActivity.this));
+                recyclerViewdanhsachbaihat.setAdapter(danhSachBaiHatAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Baihat>> call, Throwable t) {
+                Log.d("BBB", "false 8");
+            }
+        });
+    }
+
+    private void setValueInView(String ten, String hinhicon, String hinh) {
         collapsingToolbarLayout.setTitle(ten);
         try {
             URL url = new URL(hinh);
@@ -78,7 +106,7 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Picasso.with(this).load(hinh).into(imgdanhsachcakhuc);
+        Picasso.with(this).load(hinhicon).into(imgdanhsachcakhuc);//hình nhỏ
 
 
     }
@@ -140,6 +168,10 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
 
                 quangcao = (Quangcao) intent.getSerializableExtra("banner");
                 Toast.makeText(this, quangcao.getTenBaiHat(), Toast.LENGTH_LONG).show();
+            }
+            if (intent.hasExtra("playlist")) {
+                playlist = (Playlist) intent.getSerializableExtra("playlist");
+                Toast.makeText(this, playlist.getTen(), Toast.LENGTH_LONG).show();
             }
         }
 
