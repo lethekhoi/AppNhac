@@ -59,5 +59,7 @@ public interface Dataservice {
     @POST("theloaitheochude.php")
     Call<List<TheLoai>> Gettheloaithechude(@Field("idchude") String idchude);
 
+    @GET("tatcaalbum.php")
+    Call<List<Album>> GetAllAlbum();
 
 }
