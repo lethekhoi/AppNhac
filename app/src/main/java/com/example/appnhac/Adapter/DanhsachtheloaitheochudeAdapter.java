@@ -12,48 +12,46 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appnhac.Activity.DanhsachbaihatActivity;
-import com.example.appnhac.Model.Playlist;
+import com.example.appnhac.Model.TheLoai;
 import com.example.appnhac.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class DanhSachCacPlaylistAdapter extends RecyclerView.Adapter<DanhSachCacPlaylistAdapter.ViewHolder> {
+public class DanhsachtheloaitheochudeAdapter extends RecyclerView.Adapter<DanhsachtheloaitheochudeAdapter.ViewHolder> {
     Context context;
-    ArrayList<Playlist> mangplaylist;
+    ArrayList<TheLoai> mangtheloai;
 
-    public DanhSachCacPlaylistAdapter(Context context, ArrayList<Playlist> mangplaylist) {
+    public DanhsachtheloaitheochudeAdapter(Context context, ArrayList<TheLoai> mangtheloai) {
         this.context = context;
-        this.mangplaylist = mangplaylist;
+        this.mangtheloai = mangtheloai;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.dong_danh_sach_cac_playlist, parent, false);
+        View view = inflater.inflate(R.layout.dong_the_loai_theo_chu_de, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Playlist playlist = mangplaylist.get(position);
-        holder.txttencacplaylist.setText(playlist.getTen());
+        TheLoai theLoai = mangtheloai.get(position);
         Picasso.with(context)
-                .load(playlist.getHinhPlaylist())
-                .into(holder.imghinhcacplaylist);
-
-
+                .load(theLoai.getHinhTheLoai())
+                .into(holder.imghinhnen);
+        holder.txtTheloai.setText(theLoai.getTenTheLoai());
     }
 
     @Override
     public int getItemCount() {
-        return mangplaylist.size();
+        return mangtheloai.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imghinhcacplaylist;
-        TextView txttencacplaylist;
+        ImageView imghinhnen;
+        TextView txtTheloai;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,15 +60,15 @@ public class DanhSachCacPlaylistAdapter extends RecyclerView.Adapter<DanhSachCac
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, DanhsachbaihatActivity.class);
-                    intent.putExtra("playlist", mangplaylist.get(getPosition()));
+                    intent.putExtra("idtheloai", mangtheloai.get(getPosition()));
                     context.startActivity(intent);
                 }
             });
         }
 
         private void AnhXa() {
-            imghinhcacplaylist = itemView.findViewById(R.id.imgdanhsachcacplaylist);
-            txttencacplaylist = itemView.findViewById(R.id.txttendanhsachcacplaylist);
+            imghinhnen = itemView.findViewById(R.id.imgtheloaitheochude);
+            txtTheloai = itemView.findViewById(R.id.txtTentheloaitheochude);
 
         }
     }

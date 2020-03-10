@@ -19,8 +19,10 @@ import android.widget.Toast;
 
 import com.example.appnhac.Adapter.DanhSachBaiHatAdapter;
 import com.example.appnhac.Model.Baihat;
+import com.example.appnhac.Model.ChuDe;
 import com.example.appnhac.Model.Playlist;
 import com.example.appnhac.Model.Quangcao;
+import com.example.appnhac.Model.TheLoai;
 import com.example.appnhac.R;
 import com.example.appnhac.Service.APIService;
 import com.example.appnhac.Service.Dataservice;
@@ -41,6 +43,8 @@ import retrofit2.Response;
 public class DanhsachbaihatActivity extends AppCompatActivity {
     Quangcao quangcao;
     Playlist playlist;
+    TheLoai theLoai;
+
     CoordinatorLayout coordinatorLayout;
     CollapsingToolbarLayout collapsingToolbarLayout;
     Toolbar toolbar;
@@ -69,8 +73,36 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
             setValueInView(playlist.getTen(), playlist.getIcon(), playlist.getHinhPlaylist());
             GetDataPlaylist(playlist.getIdPlaylist());
         }
+//bấm vào thể loại
+        if (theLoai != null && !theLoai.getTenTheLoai().equals("")) {
+            setValueInView(theLoai.getTenTheLoai(), theLoai.getHinhTheLoai(), theLoai.getHinhTheLoai());
+            GetDataTheLoai(theLoai.getIdTheLoai());
+        }
+
+    }
+
+    private void GetDataChuDe(String idchude) {
 
 
+    }
+
+    private void GetDataTheLoai(String idtheloai) {
+        Dataservice dataservice = APIService.getService();
+        Call<List<Baihat>> callbacks = dataservice.Getdanhsachbaihattheotheloai(idtheloai);
+        callbacks.enqueue(new Callback<List<Baihat>>() {
+            @Override
+            public void onResponse(Call<List<Baihat>> call, Response<List<Baihat>> response) {
+                mangbaihat = (ArrayList<Baihat>) response.body();
+                danhSachBaiHatAdapter = new DanhSachBaiHatAdapter(DanhsachbaihatActivity.this, mangbaihat);
+                recyclerViewdanhsachbaihat.setLayoutManager(new LinearLayoutManager(DanhsachbaihatActivity.this));
+                recyclerViewdanhsachbaihat.setAdapter(danhSachBaiHatAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Baihat>> call, Throwable t) {
+                Log.d("BBB", "false 10");
+            }
+        });
     }
 
     private void GetDataPlaylist(String idplaylist) {
@@ -173,6 +205,11 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
                 playlist = (Playlist) intent.getSerializableExtra("playlist");
                 Toast.makeText(this, playlist.getTen(), Toast.LENGTH_LONG).show();
             }
+            if (intent.hasExtra("idtheloai")) {
+                theLoai = (TheLoai) intent.getSerializableExtra("idtheloai");
+                Toast.makeText(this, theLoai.getTenTheLoai(), Toast.LENGTH_LONG).show();
+            }
+            
         }
 
     }

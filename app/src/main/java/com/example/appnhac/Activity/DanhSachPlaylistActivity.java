@@ -49,6 +49,7 @@ public class DanhSachPlaylistActivity extends AppCompatActivity {
                 danhSachCacPlaylistAdapter = new DanhSachCacPlaylistAdapter(DanhSachPlaylistActivity.this, playlistArrayList);
                 recyclerViewdanhsachplaylist.setLayoutManager(new GridLayoutManager(DanhSachPlaylistActivity.this, 2));
                 recyclerViewdanhsachplaylist.setAdapter(danhSachCacPlaylistAdapter);
+
             }
 
             @Override

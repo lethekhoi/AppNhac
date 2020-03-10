@@ -2,8 +2,10 @@ package com.example.appnhac.Service;
 
 import com.example.appnhac.Model.Album;
 import com.example.appnhac.Model.Baihat;
+import com.example.appnhac.Model.ChuDe;
 import com.example.appnhac.Model.Playlist;
 import com.example.appnhac.Model.Quangcao;
+import com.example.appnhac.Model.TheLoai;
 import com.example.appnhac.Model.Theloaitrongngay;
 
 import java.util.List;
@@ -41,9 +43,21 @@ public interface Dataservice {
 
     @FormUrlEncoded
     @POST("danhsachbaihat.php")
-    Call<List< Baihat>> Getdanhsachbaihattheoplaylist(@Field("idplaylist") String idplaylist);
+    Call<List<Baihat>> Getdanhsachbaihattheoplaylist(@Field("idplaylist") String idplaylist);
+
+    @FormUrlEncoded
+    @POST("danhsachbaihat.php")
+    Call<List<Baihat>> Getdanhsachbaihattheotheloai(@Field("idtheloai") String idtheloai);
 
     @GET("danhsachplaylist.php")
     Call<List<Playlist>> GetDanhSachPlaylist();
+
+    @GET("tatcachude.php")
+    Call<List<ChuDe>> GetAllChuDe();
+
+    @FormUrlEncoded
+    @POST("theloaitheochude.php")
+    Call<List<TheLoai>> Gettheloaithechude(@Field("idchude") String idchude);
+
 
 }
