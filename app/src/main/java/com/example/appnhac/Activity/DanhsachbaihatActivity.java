@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.appnhac.Adapter.DanhSachBaiHatAdapter;
+import com.example.appnhac.Model.Album;
 import com.example.appnhac.Model.Baihat;
 import com.example.appnhac.Model.ChuDe;
 import com.example.appnhac.Model.Playlist;
@@ -44,7 +45,7 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
     Quangcao quangcao;
     Playlist playlist;
     TheLoai theLoai;
-
+    Album album;
     CoordinatorLayout coordinatorLayout;
     CollapsingToolbarLayout collapsingToolbarLayout;
     Toolbar toolbar;
@@ -79,12 +80,35 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
             GetDataTheLoai(theLoai.getIdTheLoai());
         }
 
+//bấm vào Album
+
+        if (album != null && !album.getTenAlbum().equals("")) {
+            setValueInView(album.getTenAlbum(), album.getHinhanhAlbum(), album.getHinhanhAlbum());
+            GetDataAlbum(album.getIdAlbum());
+        }
+
+
     }
 
-    private void GetDataChuDe(String idchude) {
+    private void GetDataAlbum(String idalbum) {
+        Dataservice dataservice = APIService.getService();
+        Call<List<Baihat>> callbacks = dataservice.Getdanhsachbaihattheoalbum(idalbum);
+        callbacks.enqueue(new Callback<List<Baihat>>() {
+            @Override
+            public void onResponse(Call<List<Baihat>> call, Response<List<Baihat>> response) {
+                mangbaihat = (ArrayList<Baihat>) response.body();
+                danhSachBaiHatAdapter = new DanhSachBaiHatAdapter(DanhsachbaihatActivity.this, mangbaihat);
+                recyclerViewdanhsachbaihat.setLayoutManager(new LinearLayoutManager(DanhsachbaihatActivity.this));
+                recyclerViewdanhsachbaihat.setAdapter(danhSachBaiHatAdapter);
+            }
 
-
+            @Override
+            public void onFailure(Call<List<Baihat>> call, Throwable t) {
+                Log.d("BBB", "false 10");
+            }
+        });
     }
+
 
     private void GetDataTheLoai(String idtheloai) {
         Dataservice dataservice = APIService.getService();
@@ -209,7 +233,12 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
                 theLoai = (TheLoai) intent.getSerializableExtra("idtheloai");
                 Toast.makeText(this, theLoai.getTenTheLoai(), Toast.LENGTH_LONG).show();
             }
-            
+
+            if (intent.hasExtra("album")) {
+                album = (Album) intent.getSerializableExtra("album");
+                Toast.makeText(this, album.getTenAlbum(), Toast.LENGTH_LONG).show();
+            }
+
         }
 
     }
