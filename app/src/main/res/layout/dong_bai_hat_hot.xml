@@ -35,7 +35,8 @@
         android:layout_toRightOf="@id/imgBaihathot"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="Tên Ca Sĩ"
+        android:maxWidth="200dp"
+        android:text="Tên Ca SĩTên Ca SĩTên Ca SĩTên Ca Sĩ"
         android:textColor="#000000"
         android:textSize="18sp" />
 
