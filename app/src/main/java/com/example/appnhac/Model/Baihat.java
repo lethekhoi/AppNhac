@@ -1,9 +1,12 @@
 package com.example.appnhac.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Baihat {
+public class Baihat implements Parcelable {
 
 @SerializedName("IdBaiHat")
 @Expose
@@ -24,7 +27,28 @@ private String linkBaiHat;
 @Expose
 private String luotThich;
 
-public String getIdBaiHat() {
+    protected Baihat(Parcel in) {
+        idBaiHat = in.readString();
+        tenBaiHat = in.readString();
+        hinhBaiHat = in.readString();
+        caSi = in.readString();
+        linkBaiHat = in.readString();
+        luotThich = in.readString();
+    }
+
+    public static final Creator<Baihat> CREATOR = new Creator<Baihat>() {
+        @Override
+        public Baihat createFromParcel(Parcel in) {
+            return new Baihat(in);
+        }
+
+        @Override
+        public Baihat[] newArray(int size) {
+            return new Baihat[size];
+        }
+    };
+
+    public String getIdBaiHat() {
 return idBaiHat;
 }
 
@@ -72,4 +96,18 @@ public void setLuotThich(String luotThich) {
 this.luotThich = luotThich;
 }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(idBaiHat);
+        parcel.writeString(tenBaiHat);
+        parcel.writeString(hinhBaiHat);
+        parcel.writeString(caSi);
+        parcel.writeString(linkBaiHat);
+        parcel.writeString(luotThich);
+    }
 }

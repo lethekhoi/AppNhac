@@ -1,6 +1,7 @@
 package com.example.appnhac.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.appnhac.Activity.PlayNhacActivity;
 import com.example.appnhac.Model.Baihat;
 import com.example.appnhac.R;
 import com.example.appnhac.Service.APIService;
@@ -88,6 +90,15 @@ public class BaihathotAdapter extends RecyclerView.Adapter<BaihathotAdapter.View
                         }
                     });
                     imgluotthich.setEnabled(false);
+                }
+            });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, PlayNhacActivity.class);
+                    intent.putExtra("cakhuc", baihatArrayList.get(getPosition()));
+                    context.startActivity(intent);
                 }
             });
         }

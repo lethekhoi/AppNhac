@@ -100,6 +100,7 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
                 danhSachBaiHatAdapter = new DanhSachBaiHatAdapter(DanhsachbaihatActivity.this, mangbaihat);
                 recyclerViewdanhsachbaihat.setLayoutManager(new LinearLayoutManager(DanhsachbaihatActivity.this));
                 recyclerViewdanhsachbaihat.setAdapter(danhSachBaiHatAdapter);
+                eventClick();
             }
 
             @Override
@@ -120,6 +121,7 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
                 danhSachBaiHatAdapter = new DanhSachBaiHatAdapter(DanhsachbaihatActivity.this, mangbaihat);
                 recyclerViewdanhsachbaihat.setLayoutManager(new LinearLayoutManager(DanhsachbaihatActivity.this));
                 recyclerViewdanhsachbaihat.setAdapter(danhSachBaiHatAdapter);
+                eventClick();
             }
 
             @Override
@@ -139,6 +141,7 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
                 danhSachBaiHatAdapter = new DanhSachBaiHatAdapter(DanhsachbaihatActivity.this, mangbaihat);
                 recyclerViewdanhsachbaihat.setLayoutManager(new LinearLayoutManager(DanhsachbaihatActivity.this));
                 recyclerViewdanhsachbaihat.setAdapter(danhSachBaiHatAdapter);
+                eventClick();
             }
 
             @Override
@@ -179,7 +182,7 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
                 danhSachBaiHatAdapter = new DanhSachBaiHatAdapter(DanhsachbaihatActivity.this, mangbaihat);
                 recyclerViewdanhsachbaihat.setLayoutManager(new LinearLayoutManager(DanhsachbaihatActivity.this));
                 recyclerViewdanhsachbaihat.setAdapter(danhSachBaiHatAdapter);
-
+                eventClick();
             }
 
             @Override
@@ -202,6 +205,7 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
         });
         collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
+        floatingActionButton.setEnabled(false);
 
 
     }
@@ -242,4 +246,19 @@ public class DanhsachbaihatActivity extends AppCompatActivity {
         }
 
     }
+
+    private void eventClick() {
+        floatingActionButton.setEnabled(true);
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DanhsachbaihatActivity.this, PlayNhacActivity.class);
+                intent.putExtra("cacbaihat", mangbaihat);
+                startActivity(intent);
+            }
+        });
+
+    }
+
 }
