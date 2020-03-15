@@ -25,6 +25,7 @@ public class PlayNhacActivity extends AppCompatActivity {
     SeekBar seekBarTime;
     ImageButton imgplay, imgrepeat, imgnext, imgpreview, imgsuffle;
     ViewPager viewPagerplaynhac;
+    public static ArrayList<Baihat> mangbaihat = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class PlayNhacActivity extends AppCompatActivity {
         }
 
         if (intent.hasExtra("cacbaihat")) {
-            ArrayList<Baihat> mangbaihat = intent.getParcelableArrayListExtra("cacbaihat");
+            mangbaihat = intent.getParcelableArrayListExtra("cacbaihat");
 
             for (int i = 0; i < mangbaihat.size(); i++) {
                 Log.d("BBB", mangbaihat.get(i).getTenBaiHat());
