@@ -166,6 +166,7 @@ public class PlayNhacActivity extends AppCompatActivity {
                         new PlayMP3().execute(mangbaihat.get(position).getLinkBaiHat());
                         fragment_dia_nhac.PlayDiaNhac(mangbaihat.get(position).getHinhBaiHat());
                         getSupportActionBar().setTitle(mangbaihat.get(position).getTenBaiHat());
+                        UpdateTime();
                     }
                 }
                 imgpreview.setClickable(false);
@@ -215,6 +216,7 @@ public class PlayNhacActivity extends AppCompatActivity {
                         new PlayMP3().execute(mangbaihat.get(position).getLinkBaiHat());
                         fragment_dia_nhac.PlayDiaNhac(mangbaihat.get(position).getHinhBaiHat());
                         getSupportActionBar().setTitle(mangbaihat.get(position).getTenBaiHat());
+                        UpdateTime();
                     }
                 }
                 imgpreview.setClickable(false);
@@ -333,6 +335,7 @@ public class PlayNhacActivity extends AppCompatActivity {
             }
             mediaPlayer.start();
             TimeSong();
+            UpdateTime();
 
 
         }
@@ -343,6 +346,86 @@ public class PlayNhacActivity extends AppCompatActivity {
         txttotaltimesong.setText(simpleDateFormat.format(mediaPlayer.getDuration()));
         seekBarTime.setMax(mediaPlayer.getDuration());
 
+    }
+
+    private void UpdateTime() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mediaPlayer != null) {
+                    seekBarTime.setProgress(mediaPlayer.getCurrentPosition());
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
+                    txttimesong.setText(simpleDateFormat.format(mediaPlayer.getCurrentPosition()));
+                    handler.postDelayed(this, 300);
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mediaPlayer) {
+                            next = true;
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            }
+        }, 300);
+        Handler handler1 = new Handler();
+        handler1.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (next == true) {
+                    if (mangbaihat.size() > 0) {
+                        if (mediaPlayer.isPlaying() || mediaPlayer != null) {
+                            mediaPlayer.stop();
+                            mediaPlayer.release();
+                            mediaPlayer = null;
+                        }
+                        if (position < mangbaihat.size()) {
+                            imgplay.setImageResource(R.drawable.iconpause);
+                            position++;
+                            if (repeat == true) {
+                                if (position == 0) {
+                                    position = mangbaihat.size();
+                                }
+                                position -= 1;
+                            }
+                            if (checkrandom == true) {
+                                Random random = new Random();
+                                int index = random.nextInt(mangbaihat.size());
+                                if (index == position) {
+                                    position = index - 1;
+                                }
+                                position = index;
+                            }
+
+                            if (position > (mangbaihat.size() - 1)) {
+                                position = 0;
+                            }
+                            new PlayMP3().execute(mangbaihat.get(position).getLinkBaiHat());
+                            fragment_dia_nhac.PlayDiaNhac(mangbaihat.get(position).getHinhBaiHat());
+                            getSupportActionBar().setTitle(mangbaihat.get(position).getTenBaiHat());
+                        }
+                    }
+                    imgpreview.setClickable(false);
+                    imgnext.setClickable(false);
+                    Handler handler1 = new Handler();
+                    handler1.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            imgpreview.setClickable(true);
+                            imgnext.setClickable(true);
+                        }
+                    }, 5000);
+                    next = false;
+                    handler1.removeCallbacks(this);
+                } else {
+                    handler1.postDelayed(this, 1000);
+                }
+            }
+        }, 1000);
     }
 
 }
